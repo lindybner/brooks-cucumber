@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Brooks' Cucumber Logic</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+
+        .box-score {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        button {
+            margin-right: 10px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        .red {
+            color: red;
+        }
+
+        .green {
+            color: green;
+        }
+
+        .log {
+            margin-top: 20px;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background: #f9f9f9;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Interactive Brooks' Cucumber Logic 🍽️🥒</h1>
+    <p>Control the scenario below by using the buttons:</p>
+
+    <!-- Box Score to show bits status -->
+    <div class="box-score">
+        Bits on Table: <span id="table-score" class="red">0</span> 🥒
+        <br>
+        Bits on Floor: <span id="floor-score" class="red">0</span> 😅
+    </div>
+
+    <!-- Button Container -->
+    <div class="button-container">
+        <button id="give-cucumber">Give Brooks a Cucumber Bit 🥒</button>
+        <button id="intervene">Mom Declares the Rule 🚫</button>
+    </div>
+
+    <!-- Log Box -->
+    <div id="log" class="log"></div>
+
+    <script>
+        // Helper function to append messages to the DOM with emojis
+        function appendMessage(message) {
+            const logDiv = document.getElementById("log");
+            const messagePara = document.createElement("p");
+            messagePara.textContent = message;
+            logDiv.appendChild(messagePara);
+            logDiv.scrollTop = logDiv.scrollHeight; // Auto-scroll to the latest message
+        }
+
+        // Brooks' behavior logic
+        const brooks = {
+            bitsOnTable: 0,
+            bitsOnFloor: 0,
+            isThrowingBitsFromTable: true,
+            isComplying: false,
+
+            spitOntoTable() {
+                this.bitsOnTable++;
+                updateBoxScore();
+                appendMessage(`Brooks spits a bit onto the table. 🍽️ Bits on table: ${this.bitsOnTable} 🥒`);
+            },
+
+            throwBitsFromTableToFloor() {
+                if (this.bitsOnTable > 0) {
+                    this.bitsOnTable--;
+                    this.bitsOnFloor++;
+                    updateBoxScore();
+                    appendMessage(`Brooks throws a bit from the table onto the floor. 🍴 Bits on floor: ${this.bitsOnFloor} 😅`);
+                } else {
+                    appendMessage("No bits on the table to throw! 🤷‍♂️");
+                }
+            },
+
+            spitDirectlyOntoFloor() {
+                this.bitsOnFloor++;
+                updateBoxScore();
+                appendMessage(
+                    `Brooks spits a bit directly onto the floor, complying with Mom's request. 🙌 Bits on floor: ${this.bitsOnFloor} ✅`
+                );
+            },
+
+            complyWithMom() {
+                this.isThrowingBitsFromTable = false;
+                this.isComplying = true;
+                appendMessage("Brooks complies with Mom's rule: No throwing bits from the table to the floor. 🙅‍♂️");
+            }
+        };
+
+        // Function to update the box score in the DOM
+        function updateBoxScore() {
+            const tableScoreElement = document.getElementById("table-score");
+            const floorScoreElement = document.getElementById("floor-score");
+
+            // Change colors based on whether the rule has been declared
+            if (brooks.isComplying) {
+                tableScoreElement.classList.remove("red");
+                tableScoreElement.classList.add("green");
+                floorScoreElement.classList.remove("red");
+                floorScoreElement.classList.add("green");
+            }
+
+            // Update the text with the new numbers
+            tableScoreElement.textContent = brooks.bitsOnTable;
+            floorScoreElement.textContent = brooks.bitsOnFloor;
+        }
+
+        // Event listeners for buttons
+        document.getElementById("give-cucumber").addEventListener("click", () => {
+            if (brooks.isComplying) {
+                brooks.spitDirectlyOntoFloor();
+            } else {
+                brooks.spitOntoTable();
+                setTimeout(() => {
+                    brooks.throwBitsFromTableToFloor();
+                }, 1000); // Simulates the delay between actions
+            }
+        });
+
+        document.getElementById("intervene").addEventListener("click", () => {
+            brooks.complyWithMom();
+            updateBoxScore(); // Update the box score after rule intervention
+        });
+    </script>
+</body>
+
+</html>
