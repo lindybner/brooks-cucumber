@@ -10,7 +10,7 @@ This project is a simple interactive web simulation that demonstrates Brooks' cu
 
 ## How to Use
 
-1. Open the `index.html` file in a web browser.
+1. Open the `brooks.html` file in a web browser.
 2. Click **Give Brooks a Cucumber Bit 🥒** to simulate Brooks receiving cucumber bits. Initially, he will spit the bits onto the table and throw them onto the floor.
 3. Click **Mom Declares the Rule 🚫** to change the scenario. After the rule is declared, Brooks will directly spit the cucumber bits onto the floor.
 
@@ -26,7 +26,7 @@ This project is a simple interactive web simulation that demonstrates Brooks' cu
    ```bash
    git clone https://github.com/yourusername/brooks-cucumber-logic.git
    ```
-2. Open the `index.html` file in any modern browser to start interacting with the simulation.
+2. Open the `brooks.html` file in any modern browser to start interacting with the simulation.
 
 ## License
 
