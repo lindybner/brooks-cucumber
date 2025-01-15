@@ -1,5 +1,3 @@
-# brooks-cucumber
-
 # Interactive Brooks' Cucumber Logic 🍽️🥒
 
 This project is a simple interactive web simulation that demonstrates Brooks' cucumber logic. The user (Mom) can give Brooks cucumber bits, and Brooks will either spit them onto the table and throw them on the floor or directly spit them onto the floor depending on whether Mom has intervened with a rule.
